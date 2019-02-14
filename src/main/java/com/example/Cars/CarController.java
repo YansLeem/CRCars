@@ -19,80 +19,80 @@ public class CarController {
 
     private final CarRepository repository;
 
-    SeatController(CarRepository repository){
+    CarController(CarRepository repository){
         this.repository = repository;
     }
 
     @GetMapping(path = "/cars",produces = MediaType.APPLICATION_JSON_VALUE)
     public Resources<Resource<Car>> all(){
-        List<Resource<Car>> Seats = repository.findAll().stream()
+        List<Resource<Car>> Car = repository.findAll().stream()
                 .map(employee -> new Resource<>(employee,
                         linkTo(methodOn(CarController.class).one(employee.getId())).withSelfRel(),
                         linkTo(methodOn(CarController.class).all()).withRel("Cars")))
                 .collect(Collectors.toList());
 
-        return new Resources<>(Seats,
-                linkTo(methodOn(SeatController.class).all()).withSelfRel());
+        return new Resources<>(Cars,
+                linkTo(methodOn(CarController.class).all()).withSelfRel());
     }
 
-    @PostMapping(path = "/seats", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Seat newSeat(@RequestBody Seat newEmployee) {
-        if (newEmployee.getNumber() == 777) return new Seat(771L,777, false);
+    @PostMapping(path = "/Cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Car newCar(@RequestBody Car newEmployee) {
+        if (newEmployee.getNumber() == 777) return new Car(771L,777, false);
         return repository.save(newEmployee);
     }
 
-    @GetMapping(path = "/seats/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Resource<Seat> one(@PathVariable Long id) {
+    @GetMapping(path = "/Cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Resource<Car> one(@PathVariable Long id) {
 
         if (id == 777) {
-            Seat seat = new Seat(771L,777, false);
-            return new Resource<>(seat,
-                    linkTo(methodOn(SeatController.class).one(id)).withSelfRel(),
-                    linkTo(methodOn(SeatController.class).all()).withRel("Seats"));
+            Car car = new Car(771L,777, false);
+            return new Resource<>(car,
+                    linkTo(methodOn(CarController.class).one(id)).withSelfRel(),
+                    linkTo(methodOn(CarController.class).all()).withRel("Cars"));
         }
 
-        Seat Seat = repository.findById(id)
-                .orElseThrow(() -> new SeatNotFoundException(id));
+        Car Car = repository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException(id));
 
-        return new Resource<>(Seat,
-                linkTo(methodOn(SeatController.class).one(id)).withSelfRel(),
-                linkTo(methodOn(SeatController.class).all()).withRel("Seats"));
+        return new Resource<>(Car,
+                linkTo(methodOn(CarController.class).one(id)).withSelfRel(),
+                linkTo(methodOn(CarController.class).all()).withRel("Cars"));
     }
 
-    @PutMapping("/seats/{id}")
-    public Seat replaceSeat(@RequestBody Seat newSeat,@PathVariable Long id){
+    @PutMapping("/cars/{id}")
+    public Car replaceCar(@RequestBody Car newCar,@PathVariable Long id){
 
         if (id == 777){
-            Seat person = new Seat(777L,777, false);
-            return person;
+            Car car = new Car(777L,777, false);
+            return car;
         } else if (id == 111){
-            Seat person = new Seat(111L,111, false);
-            return person;
+            Car car = new Car(111L,111, false);
+            return car;
         }
 
         return repository.findById(id)
-                .map(Seat -> {
-                    Seat.setNumber(newSeat.getNumber());
-                    Seat.setTaken(newSeat.getTaken());
-                    return repository.save(Seat);
+                .map(Car -> {
+                    Car.setNumber(newCar.getNumber());
+                    Car.setTaken(newCar.getTaken());
+                    return repository.save(Car);
                 }).orElseGet(() -> {
-                    newSeat.setId(id);
-                    return repository.save(newSeat);
+                    newCar.setId(id);
+                    return repository.save(newCar);
                 });
     }
 
-    @PutMapping("/seats/{id}/{value}")
-    public void replaceSeat(@PathVariable Long id, @PathVariable Boolean value){
+    @PutMapping("/cars/{id}/{value}")
+    public void replaceCar(@PathVariable Long id, @PathVariable Boolean value){
          System.out.println("SET  " + id + " TO " + value );
          repository.findById(id)
-                .map(Seat -> {
-                    Seat.setTaken(value);
-                    return repository.save(Seat);
+                .map(Car -> {
+                    Car.setTaken(value);
+                    return repository.save(Car);
                 });
     }
 
-    @DeleteMapping("/seats/{id}")
-    void deleteSeat(@PathVariable Long id) {
+    @DeleteMapping("/cars/{id}")
+    void deleteCar(@PathVariable Long id) {
         repository.deleteById(id);
     }
 

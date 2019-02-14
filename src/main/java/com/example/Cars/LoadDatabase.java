@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class LoadDatabase {
 
     @Bean
-    CommandLineRunner initDatabase(SeatRepository repository) throws Exception{
+    CommandLineRunner initDatabase(CarRepository repository) throws Exception{
         return args -> {
             log.info("Preloading" + repository.save(new Car(1L,1,true)));
             log.info("Preloading" + repository.save(new Car(2L,2,true)));
