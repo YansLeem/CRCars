@@ -10,17 +10,37 @@ import javax.persistence.Id;
 @Entity
 public class Car {
     private @Id Long id;
-    private Integer Number;
+    private String Vin;
     private Boolean Taken =false;
 
-    Car(Long id, Integer number, Boolean taken){
+    Car(Long id, String vin, Boolean taken){
         this.id = id;
-        this.Number = number;
+        this.Vin = vin;
         this.Taken = taken;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getVin() {
+        return Vin;
+    }
+
+    public void setVin(String vin) {
+        Vin = vin;
+    }
+
+    public Boolean getTaken() {
+        return Taken;
+    }
+
     public void setTaken(Boolean taken) {
-        this.Taken = taken;
+        Taken = taken;
     }
 }
 

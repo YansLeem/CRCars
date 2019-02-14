@@ -31,7 +31,7 @@ public class CarController {
                         linkTo(methodOn(CarController.class).all()).withRel("Cars")))
                 .collect(Collectors.toList());
 
-        return new Resources<>(Cars,
+        return new Resources<>(Car,
                 linkTo(methodOn(CarController.class).all()).withSelfRel());
     }
 

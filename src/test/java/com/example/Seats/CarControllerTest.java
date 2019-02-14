@@ -1,7 +1,7 @@
 package com.example.Seats;
 
-import com.example.Cars.Seat;
-import com.example.Cars.SeatController;
+import com.example.Cars.Car;
+import com.example.Cars.CarController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -27,10 +27,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SeatControllerTest {
+public class CarControllerTest {
 
         @InjectMocks
-        private SeatController seatController;
+        private CarController carController;
 
         private MockMvc mockMvc;
 
@@ -38,12 +38,12 @@ public class SeatControllerTest {
 
         @Before
         public void setup() throws Exception{
-            mockMvc = MockMvcBuilders.standaloneSetup(seatController).build();
+            mockMvc = MockMvcBuilders.standaloneSetup(carController).build();
         }
 
         @Test
         public void testGet() throws Exception {
-            mockMvc.perform(get("/seats/777")
+            mockMvc.perform(get("/cars/777")
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.number", Matchers.is(777)));
@@ -52,15 +52,14 @@ public class SeatControllerTest {
 
         @Test
         public void testPut() throws Exception {
-            Seat newseat = new Seat(111L, 111,false);
-            String jsonRequest = om.writeValueAsString(newseat);
-            //System.out.println("HERE >>>"  + " <<< HERE");
-            MvcResult result = mockMvc.perform(put("/seats/777").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
+            Car newcar = new Car(111L, 111,false);
+            String jsonRequest = om.writeValueAsString(newcar);
+            MvcResult result = mockMvc.perform(put("/cars/777").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk()).andReturn();
 
             String resultContent = result.getResponse().getContentAsString();
-            Seat seat = om.readValue(resultContent,Seat.class);
-            System.out.println("HERE >>>" + seat.getNumber() + " <<< HERE");
+            Car car = om.readValue(resultContent,Car.class);
+            System.out.println("HERE >>>" + car.getNumber() + " <<< HERE");
 
         }
 
@@ -69,15 +68,14 @@ public class SeatControllerTest {
 
         @Test
         public void testPost() throws Exception {
-            Seat newseat = new Seat(777L, 777,false);
-            String jsonRequest = om.writeValueAsString(newseat);
-            //System.out.println("HERE >>>"  + " <<< HERE");
-            MvcResult result = mockMvc.perform(post("/seats").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
+            Car newcar = new Car(777L, 777,false);
+            String jsonRequest = om.writeValueAsString(newcar);
+            MvcResult result = mockMvc.perform(post("/cars").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk()).andReturn();
 
             String resultContent = result.getResponse().getContentAsString();
-            Seat seat = om.readValue(resultContent,Seat.class);
-            System.out.println("HERE >>>" + seat.getNumber() + " <<< HERE");
+            Car car = om.readValue(resultContent,Car.class);
+            System.out.println("HERE >>>" + car.getNumber() + " <<< HERE");
 
         }
 
