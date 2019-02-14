@@ -85,6 +85,7 @@ public class CarController {
                 .map(Car -> {
                     Car.setTaken(value);
                     return repository.save(Car);
+
                 });
     }
 
