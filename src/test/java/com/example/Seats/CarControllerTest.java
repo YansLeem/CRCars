@@ -42,10 +42,10 @@ public class CarControllerTest {
 
         @Test
         public void testGet() throws Exception {
-            mockMvc.perform(get("/cars/777")
+            mockMvc.perform(get("/cars/111")
                     .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.number", Matchers.is(777)));
+                    .andExpect(jsonPath("$.vin", Matchers.is("111")));
         }
 
 
@@ -67,14 +67,14 @@ public class CarControllerTest {
 
         @Test
         public void testPost() throws Exception {
-            Car newcar = new Car(777L, 777,false);
+            Car newcar = new Car(111L, "111",false);
             String jsonRequest = om.writeValueAsString(newcar);
             MvcResult result = mockMvc.perform(post("/cars").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk()).andReturn();
 
             String resultContent = result.getResponse().getContentAsString();
             Car car = om.readValue(resultContent,Car.class);
-            System.out.println("HERE >>>" + car.getNumber() + " <<< HERE");
+            System.out.println("HERE >>>" + car.getVin() + " <<< HERE");
 
         }
 

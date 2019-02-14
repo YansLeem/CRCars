@@ -37,7 +37,7 @@ public class CarController {
 
     @PostMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public Car newCar(@RequestBody Car newEmployee) {
-        if (newEmployee.getVin() == "111") return new Car(771L,"111", false);
+        if (newEmployee.getVin() == "111") return new Car(111L,"111", false);
         return repository.save(newEmployee);
     }
 

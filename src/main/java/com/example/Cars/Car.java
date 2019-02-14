@@ -13,7 +13,7 @@ public class Car {
     private String Vin;
     private Boolean Taken =false;
 
-    Car(Long id, String vin, Boolean taken){
+    public Car(Long id, String vin, Boolean taken){
         this.id = id;
         this.Vin = vin;
         this.Taken = taken;
