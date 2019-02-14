@@ -20,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import com.sun.xml.internal.xsom.impl.Ref;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -52,14 +51,14 @@ public class CarControllerTest {
 
         @Test
         public void testPut() throws Exception {
-            Car newcar = new Car(111L, 111,false);
+            Car newcar = new Car(111L, "111",false);
             String jsonRequest = om.writeValueAsString(newcar);
-            MvcResult result = mockMvc.perform(put("/cars/777").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
+            MvcResult result = mockMvc.perform(put("/cars/111").content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk()).andReturn();
 
             String resultContent = result.getResponse().getContentAsString();
             Car car = om.readValue(resultContent,Car.class);
-            System.out.println("HERE >>>" + car.getNumber() + " <<< HERE");
+            System.out.println("HERE >>>" + car.getVin() + " <<< HERE");
 
         }
 

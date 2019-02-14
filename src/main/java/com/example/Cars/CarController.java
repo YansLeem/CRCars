@@ -35,17 +35,17 @@ public class CarController {
                 linkTo(methodOn(CarController.class).all()).withSelfRel());
     }
 
-    @PostMapping(path = "/Cars", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
     public Car newCar(@RequestBody Car newEmployee) {
-        if (newEmployee.getNumber() == 777) return new Car(771L,777, false);
+        if (newEmployee.getVin() == "111") return new Car(771L,"111", false);
         return repository.save(newEmployee);
     }
 
-    @GetMapping(path = "/Cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/cars/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Resource<Car> one(@PathVariable Long id) {
 
-        if (id == 777) {
-            Car car = new Car(771L,777, false);
+        if (id.toString().equals("111")) {
+            Car car = new Car(111L,"111", false);
             return new Resource<>(car,
                     linkTo(methodOn(CarController.class).one(id)).withSelfRel(),
                     linkTo(methodOn(CarController.class).all()).withRel("Cars"));
@@ -62,17 +62,14 @@ public class CarController {
     @PutMapping("/cars/{id}")
     public Car replaceCar(@RequestBody Car newCar,@PathVariable Long id){
 
-        if (id == 777){
-            Car car = new Car(777L,777, false);
-            return car;
-        } else if (id == 111){
-            Car car = new Car(111L,111, false);
+        if (id.toString().equals("111")){
+            Car car = new Car(111L,"111", false);
             return car;
         }
 
         return repository.findById(id)
                 .map(Car -> {
-                    Car.setNumber(newCar.getNumber());
+                    Car.setVin(newCar.getVin());
                     Car.setTaken(newCar.getTaken());
                     return repository.save(Car);
                 }).orElseGet(() -> {
